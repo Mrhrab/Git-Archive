@@ -2,7 +2,11 @@ const searchBook = () =>{
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     console.log(searchText);
+
+    // clear data
     searchField.value = '';
+
+    // load data
     const url = `https://openlibrary.org/search.json?q=${searchText}`;
     console.log(url);
     fetch(url)
@@ -12,8 +16,11 @@ const searchBook = () =>{
 
 const displaySearchResult = books => {
     const searchResult = document.getElementById('search-result');
+    searchResult.textContent = '';
+    if(books.length === 0){
+      document.getElementById('error-message').style.display = "block"  
+    }
     books.forEach(book =>{
-    console.log(book); 
     const div = document.createElement('div');
     div.classList.add('col');
     div.innerHTML = `
@@ -25,7 +32,7 @@ const displaySearchResult = books => {
             <h4 class="card-title">Writer:${book.author_name}</h4>
             <h6 class="card-title">Publish Year:${book.first_publish_year}</h5>
             <h6 class="card-title">Publisher:${book.publisher}</h6>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text">I could not find any description in the given api. So, i was unable to add one.</p>
         </div>
     </div>
            `;
